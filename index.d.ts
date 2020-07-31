@@ -6,6 +6,13 @@ declare namespace cpFile {
 		@default true
 		*/
 		readonly overwrite?: boolean;
+
+		/**
+		Follow symlinked source, copying it's content instead of the symlink.
+
+		@default true
+		*/
+		readonly followSymlinks?: boolean;
 	}
 
 	interface ProgressData {

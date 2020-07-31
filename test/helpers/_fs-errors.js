@@ -1,6 +1,6 @@
 'use strict';
 
-exports.buildEACCES = path => Object.assign(new Error(`EACCES: permission denied '${path}'`), {
+exports.buildEACCES = path => Object.assign(new Error(`EACCES: permission denied ’${path}’`), {
 	errno: -13,
 	code: 'EACCES',
 	path
@@ -11,7 +11,7 @@ exports.buildENOSPC = () => Object.assign(new Error('ENOSPC, write'), {
 	code: 'ENOSPC'
 });
 
-exports.buildENOENT = path => Object.assign(new Error(`ENOENT: no such file or directory '${path}'`), {
+exports.buildENOENT = path => Object.assign(new Error(`ENOENT: no such file or directory ’${path}’`), {
 	errno: -2,
 	code: 'ENOENT',
 	path
@@ -31,7 +31,7 @@ exports.buildEBADF = () => Object.assign(new Error('EBADF: bad file descriptor')
 	code: 'EBADF'
 });
 
-exports.buildEPERM = (path, method) => Object.assign(new Error(`EPERM: ${method} '${path}''`), {
+exports.buildEPERM = (path, method) => Object.assign(new Error(`EPERM: ${method} ’${path}’`), {
 	errno: 50,
 	code: 'EPERM'
 });

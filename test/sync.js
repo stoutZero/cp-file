@@ -116,16 +116,16 @@ test('do not create `destination` directory on unreadable `source`', t => {
 test('preserve timestamps', t => {
 	cpFile.sync('license', t.context.destination);
 	const licenseStats = fs.lstatSync('license');
-	const tempStats = fs.lstatSync(t.context.destination);
-	assertDateEqual(t, licenseStats.atime, tempStats.atime);
-	assertDateEqual(t, licenseStats.mtime, tempStats.mtime);
+	const temporaryStats = fs.lstatSync(t.context.destination);
+	assertDateEqual(t, licenseStats.atime, temporaryStats.atime);
+	assertDateEqual(t, licenseStats.mtime, temporaryStats.mtime);
 });
 
 test('preserve mode', t => {
 	cpFile.sync('license', t.context.destination);
 	const licenseStats = fs.lstatSync('license');
-	const tempStats = fs.lstatSync(t.context.destination);
-	t.is(licenseStats.mode, tempStats.mode);
+	const temporaryStats = fs.lstatSync(t.context.destination);
+	t.is(licenseStats.mode, temporaryStats.mode);
 });
 
 test('throw an Error if `source` does not exists', t => {
@@ -166,6 +166,7 @@ test('rethrow ENOSPC errors', t => {
 	const error = t.throws(() => {
 		cpFile.sync('license', t.context.destination);
 	});
+
 	t.is(error.name, 'CpFileError', error.message);
 	t.is(error.errno, noSpaceError.errno, error.message);
 	t.is(error.code, noSpaceError.code, error.message);
@@ -179,17 +180,18 @@ test('rethrow stat errors', t => {
 
 	fs.writeFileSync(t.context.source, '');
 
-	fs.statSync = sinon.stub(fs, 'statSync').throws(statError);
+	fs.lstatSync = sinon.stub(fs, 'lstatSync').throws(statError);
 
 	const error = t.throws(() => {
 		cpFile.sync(t.context.source, t.context.destination);
 	});
+
 	t.is(error.name, 'CpFileError', error.message);
 	t.is(error.errno, statError.errno, error.message);
 	t.is(error.code, statError.code, error.message);
-	t.true(fs.statSync.called);
+	t.true(fs.lstatSync.called);
 
-	fs.statSync.restore();
+	fs.lstatSync.restore();
 });
 
 test('rethrow utimes errors', t => {

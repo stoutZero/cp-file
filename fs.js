@@ -33,6 +33,14 @@ exports.lstat = path => lstat(path).catch(error => {
 	throw new CpFileError(`lstat \`${path}\` failed: ${error.message}`, error);
 });
 
+exports.lstatSync = path => {
+	try {
+		return fs.lstatSync(path);
+	} catch (error) {
+		throw new CpFileError(`stat \`${path}\` failed: ${error.message}`, error);
+	}
+};
+
 exports.utimes = (path, atime, mtime) => utimes(path, atime, mtime).catch(error => {
 	throw new CpFileError(`utimes \`${path}\` failed: ${error.message}`, error);
 });

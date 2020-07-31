@@ -52,7 +52,16 @@ Where you want the file copied.
 
 Type: `object`
 
-##### overwrite
+##### options.overwrite
+
+Overwrite existing destination file.
+
+Type: `boolean`\
+Default: `true`
+
+##### options.followSymlinks
+
+Follow symlinked source, copying it's content instead of the symlink.
 
 Type: `boolean`\
 Default: `true`
